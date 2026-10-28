@@ -1,6 +1,6 @@
 import asyncio, json, os, edge_tts
 SEGS = [
-"Y no es una promesa: ya he creado más de diez aplicaciones reales. Para salud: Toolkit SISMED, Inmunia y EasyPharma. Para finanzas: Serviqo, Yupana y Pagadia. Y para negocios: AgroAcopio, Comprobante OK, Tenlo y sistemas para restaurantes.",
+"He desarrollado sistemas que convierten ideas en software que trabaja por ti.",
 ]
 async def one(voice, i, text):
     c = edge_tts.Communicate(text, voice, rate="+12%", boundary="WordBoundary")
@@ -17,7 +17,7 @@ async def main():
     for i, s in enumerate(SEGS):
         for k in range(5):
             try:
-                await one("es-PE-AlexNeural", 8, s); break
+                await one("es-PE-AlexNeural", 3, s); break
             except Exception as e:
                 print("retry", i, e); await asyncio.sleep(3)
 asyncio.run(main())
