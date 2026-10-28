@@ -13,7 +13,7 @@ SEGS = [
 "¿Tienes una idea? Escríbeme hoy al 956 606 972. ¡Tu negocio puede ser el próximo!",
 ]
 async def one(voice, i, text):
-    c = edge_tts.Communicate(text, voice, rate="+10%", pitch="+2Hz", boundary="WordBoundary")
+    c = edge_tts.Communicate(text, voice, rate="+10%", boundary="WordBoundary")
     words = []
     with open(f"out/{voice}_{i}.mp3", "wb") as f:
         async for ch in c.stream():
@@ -25,5 +25,9 @@ async def one(voice, i, text):
 async def main():
     os.makedirs("out", exist_ok=True)
     for i, s in enumerate(SEGS):
-        await one("es-PE-AlexNeural", i, s)
+        for k in range(5):
+            try:
+                await one("es-PE-AlexNeural", i, s); break
+            except Exception as e:
+                print("retry", i, e); await asyncio.sleep(3)
 asyncio.run(main())
