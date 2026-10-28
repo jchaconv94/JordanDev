@@ -1,0 +1,24 @@
+name: tts-narracion
+on:
+  push:
+    branches:
+      - tts-narracion
+permissions:
+  contents: write
+jobs:
+  tts:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install edge-tts
+      - run: python tts/gen.py && ls -la out
+      - run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
+          mv out tts/out
+          git add tts/out
+          git commit -m "Narración generada"
+          git push
